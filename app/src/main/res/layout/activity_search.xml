@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/pokeball_background"
+    tools:context="com.example.emre.pokedex.SearchActivity">
+
+
+    <EditText
+        android:id="@+id/searchET"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="24sp"
+        android:layout_marginRight="24sp"
+        android:layout_marginTop="16sp"
+        android:hint="@string/search_hint"
+        android:textAlignment="center"
+        android:textColor="@android:color/darker_gray"
+        android:textSize="28sp"
+        android:maxLines="1"
+        android:inputType="text" />
+</RelativeLayout>

@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Pokedex</string>
+    <string name="search_hint">Enter Name or Id</string>
+    <string name="cont_desc_sprite">pokemon_sprite</string>
+    <string name="cont_desc_t1">pokemon_t1</string>
+    <string name="cont_desc_t2">pokemon_t2</string>
+</resources>
