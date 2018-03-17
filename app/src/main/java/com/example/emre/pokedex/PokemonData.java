@@ -7,6 +7,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+// Had to implement Parcelable, in order to make the object shareable via intents
 public class PokemonData implements Parcelable {
 
     private String name;
@@ -15,40 +16,32 @@ public class PokemonData implements Parcelable {
     private String type2 = "";
     private String spriteURL;
 
-    public PokemonData() {
-        super();
+    // Dummy constructor
+    public PokemonData(JSONObject json) {
+        try {
+            String tempName = json.getString("name");
+            this.name = Character.toUpperCase(tempName.charAt(0)) + tempName.substring(1);
+            this.id = json.getInt("id");
+            JSONArray typeArray = json.getJSONArray("types");
+            if (typeArray.length() == 1)
+                this.type1 = typeArray.getJSONObject(0).getJSONObject("type").getString("name");
+            else {
+                this.type1 = typeArray.getJSONObject(0).getJSONObject("type").getString("name");
+                this.type2 = typeArray.getJSONObject(1).getJSONObject("type").getString("name");
+            }
+            this.spriteURL = json.getJSONObject("sprites").getString("front_default");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
+    // Required constructor for Parcelable interface, never really used in source code.
     public PokemonData(Parcel in) {
         name = in.readString();
         id = in.readInt();
         type1 = in.readString();
         type2 = in.readString();
         spriteURL = in.readString();
-    }
-
-    public static PokemonData fromJson(JSONObject json) {
-
-        try {
-            PokemonData pokemonData = new PokemonData();
-
-            String tempName = json.getString("name");
-            pokemonData.name = Character.toUpperCase(tempName.charAt(0)) + tempName.substring(1);
-            pokemonData.id = json.getInt("id");
-            JSONArray typeArray = json.getJSONArray("types");
-            if (typeArray.length() == 1)
-                pokemonData.type1 = typeArray.getJSONObject(0).getJSONObject("type").getString("name");
-            else {
-                pokemonData.type1 = typeArray.getJSONObject(0).getJSONObject("type").getString("name");
-                pokemonData.type2 = typeArray.getJSONObject(1).getJSONObject("type").getString("name");
-            }
-            pokemonData.spriteURL = json.getJSONObject("sprites").getString("front_default");
-
-            return pokemonData;
-        } catch (JSONException e) {
-            e.printStackTrace();
-            return null;
-        }
     }
 
     public String getName() {
@@ -71,6 +64,7 @@ public class PokemonData implements Parcelable {
         return spriteURL;
     }
 
+    // Dummy implementations for Parcelable interface
     @Override
     public int describeContents() {
         return 0;
